@@ -66,5 +66,55 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "scripts": {
+    "install": "npm install --save-dev tsx"
+  },
+  "resolutions": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "15.2.3"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",     
+    "not op_mini all",
+    "last 2 versions",
+    "not ie <= 11"
+  ],
+  "eslintConfig": {
+    "extends": "next/core-web-vitals",      
+}
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "tabWidth": 2
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
   }
 }
+  "next": {
+    "experimental": {
+      "appDir": true,
+      "serverActions": true
+    }
+  },
+  "ai": {
+    "enabled": true,
+    "configPath": "./src/ai/config.ts"
+  }
+  "genkit": {
+    "configPath": "./src/ai/config.ts",
+    "dev": {
+      "port": 9002
+    }
+    "npm run build": "next build",
+    "npm run start": "next start"
+    
+}
+    
