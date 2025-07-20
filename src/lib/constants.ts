@@ -12,4 +12,7 @@ export const ROUTES = {
   SIGNUP: "/signup",
   PROFILE: "/profile",
   ORDERS: "/orders",
+  ADMIN: "/admin",
+  ADMIN_LOGIN: "/admin/login", // New route for admin login
+  ADMIN_ORDERS: "/admin/orders",
 };

@@ -12,7 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Package, Loader2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Package, Loader2, AlertTriangle, FileText } from "lucide-react";
+
+const GLOBAL_ORDERS_STORAGE_KEY = 'GLOBAL_ALL_ORDERS';
 
 export default function OrderDetailPage() {
   const params = useParams();
@@ -39,18 +41,22 @@ export default function OrderDetailPage() {
       setIsLoadingOrder(true);
       setError(null);
       try {
-        const ordersStorageKey = `orders_${currentUser.id}`;
-        const storedOrdersString = localStorage.getItem(ordersStorageKey);
+        const storedOrdersString = localStorage.getItem(GLOBAL_ORDERS_STORAGE_KEY);
         if (storedOrdersString) {
-          const parsedOrders: Order[] = JSON.parse(storedOrdersString);
-          const foundOrder = parsedOrders.find(o => o.id === orderId);
+          const allOrders: Order[] = JSON.parse(storedOrdersString);
+          const foundOrder = allOrders.find(o => o.id === orderId);
           if (foundOrder) {
-            setOrder({...foundOrder, createdAt: new Date(foundOrder.createdAt)});
+            // Security check: ensure the order belongs to the current user
+            if (foundOrder.userId === currentUser.id) {
+              setOrder({...foundOrder, createdAt: new Date(foundOrder.createdAt)});
+            } else {
+              setError("Access denied. This order does not belong to you.");
+            }
           } else {
             setError("Order not found.");
           }
         } else {
-          setError("No orders found for this user.");
+          setError("No orders found.");
         }
       } catch (e) {
         console.error("Failed to load order from localStorage:", e);
@@ -89,7 +95,6 @@ export default function OrderDetailPage() {
   }
 
   if (!order) {
-    // Should be caught by error state, but as a fallback
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] text-center">
         <Package className="w-20 h-20 text-muted-foreground mb-6" />
@@ -165,7 +170,7 @@ export default function OrderDetailPage() {
               <TableFooter>
                 <TableRow>
                   <TableCell colSpan={3} className="hidden md:table-cell"></TableCell>
-                  <TableCell colSpan={3} className="md:col-span-1 text-right font-semibold">Total</TableCell>
+                  <TableCell colSpan={1} className="md:col-span-1 text-right font-semibold">Total</TableCell>
                   <TableCell className="text-right font-semibold">₹{order.totalAmount.toFixed(2)}</TableCell>
                 </TableRow>
               </TableFooter>
@@ -187,6 +192,8 @@ export default function OrderDetailPage() {
             <div>
               <h3 className="text-lg font-semibold mb-2">Order Status</h3>
               <p className={`font-semibold text-lg ${
+                  order.status === 'Awaiting Payment Confirmation' ? 'text-amber-600' :
+                  order.status === 'Confirmed' ? 'text-sky-600' :
                   order.status === 'Pending' ? 'text-yellow-600' :
                   order.status === 'Shipped' ? 'text-blue-600' :
                   order.status === 'Delivered' ? 'text-green-600' :
@@ -194,7 +201,14 @@ export default function OrderDetailPage() {
               }`}>
                 {order.status}
               </p>
-              {/* Could add status history or tracking info here */}
+              {order.paymentReceiptFilename && (
+                <div className="mt-2 text-sm text-muted-foreground">
+                  <p className="flex items-center gap-1.5">
+                    <FileText className="h-4 w-4 text-primary" />
+                    Payment Receipt: <span className="font-medium text-foreground">{order.paymentReceiptFilename}</span>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </CardContent>
@@ -202,10 +216,8 @@ export default function OrderDetailPage() {
             <Button variant="outline" asChild>
                 <Link href={ROUTES.PRODUCTS}>Continue Shopping</Link>
             </Button>
-            {/* Add reorder or contact support buttons if needed */}
         </CardFooter>
       </Card>
     </div>
   );
 }
-

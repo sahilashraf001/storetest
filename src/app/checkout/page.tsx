@@ -33,8 +33,8 @@ import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { ROUTES, APP_NAME } from "@/lib/constants";
-import { ShoppingBag, CreditCard, Loader2, UserCircle, LogIn, UserPlus, Mail, MessageSquare } from "lucide-react";
-import type { Order, CartItemType } from "@/lib/types";
+import { ShoppingBag, CreditCard, Loader2, UserCircle, LogIn, UserPlus, Mail, MessageSquare, UploadCloud, FileText, Banknote } from "lucide-react";
+import type { Order, CartItemType, AddressType } from "@/lib/types";
 
 const shippingSchema = z.object({
   name: z.string().min(2, { message: "Full name is required." }),
@@ -49,26 +49,34 @@ type ShippingFormValues = z.infer<typeof shippingSchema>;
 const OWNER_EMAIL = "msprincesolutions@gmail.com";
 const OWNER_PHONE = "9917122440";
 const LAST_ORDER_NUMBER_KEY = 'last_secureview_order_number';
+const GLOBAL_ORDERS_STORAGE_KEY = 'GLOBAL_ALL_ORDERS'; // Changed for global storage
+
+// Bank Details for Manual Payment
+const BANK_ACCOUNT_NAME = "PRINCE SOLUTIONS";
+const BANK_ACCOUNT_NUMBER = "123456789012";
+const BANK_IFSC_CODE = "BANK0000001";
+const UPI_ID_FOR_QR_TEXT = "princesolutions@upi";
 
 function generateNextOrderId(): string {
   let lastOrderNumber = 0;
-  try {
-    const storedLastOrderNumber = localStorage.getItem(LAST_ORDER_NUMBER_KEY);
-    if (storedLastOrderNumber) {
-      const parsedNumber = parseInt(storedLastOrderNumber, 10);
-      if (!isNaN(parsedNumber)) {
-        lastOrderNumber = parsedNumber;
+  if (typeof window !== 'undefined') {
+    try {
+      const storedLastOrderNumber = localStorage.getItem(LAST_ORDER_NUMBER_KEY);
+      if (storedLastOrderNumber) {
+        const parsedNumber = parseInt(storedLastOrderNumber, 10);
+        if (!isNaN(parsedNumber)) {
+          lastOrderNumber = parsedNumber;
+        }
       }
+    } catch (e) {
+      console.error("Error reading last order number from localStorage", e);
     }
-  } catch (e) {
-    console.error("Error reading last order number from localStorage", e);
-    // If error, we'll just start from 0, which means the next order sequence will be 1.
   }
 
   const nextOrderSequence = lastOrderNumber + 1;
-  localStorage.setItem(LAST_ORDER_NUMBER_KEY, nextOrderSequence.toString());
-
-  // Pad the number to 3 digits (e.g., 1 -> "001", 10 -> "010", 100 -> "100")
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(LAST_ORDER_NUMBER_KEY, nextOrderSequence.toString());
+  }
   const paddedNumber = nextOrderSequence.toString().padStart(3, '0');
   return `PSOID${paddedNumber}`;
 }
@@ -80,11 +88,14 @@ export default function CheckoutPage() {
   const { cartItems, getCartTotal, clearCart, loading: cartLoading, getItemCount } = useCart();
   const { toast } = useToast();
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
+  const [paymentReceiptFile, setPaymentReceiptFile] = useState<File | null>(null);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | 'new'>('new');
+
 
   const form = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingSchema),
     defaultValues: {
-      name: currentUser?.name || "",
+      name: "",
       address: "",
       city: "",
       postalCode: "",
@@ -97,11 +108,71 @@ export default function CheckoutPage() {
   }, []);
 
   useEffect(() => {
-    if (currentUser && currentUser.name && !form.getValues("name")) {
-      form.setValue("name", currentUser.name);
+    if (currentUser) {
+      if (currentUser.addresses && currentUser.addresses.length > 0) {
+        const defaultAddress = currentUser.addresses.find(addr => addr.isDefault) || currentUser.addresses[0];
+        if (defaultAddress) {
+          setSelectedAddressId(defaultAddress.id);
+          form.reset({
+            name: currentUser.name || "", 
+            address: defaultAddress.street,
+            city: defaultAddress.city,
+            postalCode: defaultAddress.postalCode,
+            country: defaultAddress.country,
+          });
+        }
+      } else {
+        setSelectedAddressId('new');
+        form.setValue("name", currentUser.name || "");
+      }
+    } else {
+       form.reset({ name: "", address: "", city: "", postalCode: "", country: "" });
     }
   }, [currentUser, form]);
+  
+  const handleAddressSelectionChange = (addressId: string) => {
+    setSelectedAddressId(addressId);
+    if (addressId === 'new') {
+      form.reset({
+        name: currentUser?.name || "",
+        address: "",
+        city: "",
+        postalCode: "",
+        country: "",
+      });
+    } else if (currentUser?.addresses) {
+      const selectedAddr = currentUser.addresses.find(addr => addr.id === addressId);
+      if (selectedAddr) {
+        form.reset({
+          name: currentUser.name || "", 
+          address: selectedAddr.street,
+          city: selectedAddr.city,
+          postalCode: selectedAddr.postalCode,
+          country: selectedAddr.country,
+        });
+      }
+    }
+  };
 
+
+  const handleReceiptUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      if (file.size > 5 * 1024 * 1024) { 
+        toast({
+            title: "File Too Large",
+            description: "Payment receipt file should be less than 5MB.",
+            variant: "destructive",
+        });
+        setPaymentReceiptFile(null);
+        event.target.value = ""; 
+        return;
+      }
+      setPaymentReceiptFile(file);
+    } else {
+      setPaymentReceiptFile(null);
+    }
+  };
 
   const onSubmit = async (data: ShippingFormValues) => {
     if (!isAuthenticated || !currentUser) {
@@ -112,40 +183,57 @@ export default function CheckoutPage() {
         });
         return;
     }
+    if (!paymentReceiptFile) {
+        toast({
+            title: "Payment Receipt Required",
+            description: "Please upload your payment receipt to proceed.",
+            variant: "destructive",
+        });
+        return;
+    }
+
     setIsProcessingOrder(true);
-    // Simulate API call for order processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500)); 
 
     const orderId = generateNextOrderId();
 
     const newOrder: Order = {
       id: orderId,
       userId: currentUser.id,
-      items: cartItems.map(item => ({ ...item })), // Create a deep copy of cart items
+      userName: currentUser.name, // Store user's name
+      userEmail: currentUser.email, // Store user's email
+      items: cartItems.map(item => ({ ...item })),
       totalAmount: getCartTotal(),
-      shippingAddress: data,
+      shippingAddress: { 
+        name: data.name, 
+        address: data.address, 
+        city: data.city,
+        postalCode: data.postalCode,
+        country: data.country,
+      },
       createdAt: new Date(),
-      status: 'Pending',
+      status: 'Awaiting Payment Confirmation',
+      paymentReceiptFilename: paymentReceiptFile.name,
     };
 
-    // Save order to localStorage
-    const ordersStorageKey = `orders_${currentUser.id}`;
-    const existingOrdersString = localStorage.getItem(ordersStorageKey);
-    const existingOrders: Order[] = existingOrdersString ? JSON.parse(existingOrdersString) : [];
-    localStorage.setItem(ordersStorageKey, JSON.stringify([newOrder, ...existingOrders]));
+    let existingOrders: Order[] = [];
+    if (typeof window !== 'undefined') {
+        const existingOrdersString = localStorage.getItem(GLOBAL_ORDERS_STORAGE_KEY);
+        existingOrders = existingOrdersString ? JSON.parse(existingOrdersString) : [];
+        localStorage.setItem(GLOBAL_ORDERS_STORAGE_KEY, JSON.stringify([newOrder, ...existingOrders]));
+    }
+
 
     console.log("Order placed with data:", newOrder);
-
-    // Simulate sending notifications
     console.log(`%c[Notification Simulation]`, 'font-weight: bold; color: blue;');
-    console.log(`TO OWNER (${OWNER_EMAIL}): New order placed! Order ID: ${newOrder.id}, Total: ₹${newOrder.totalAmount.toFixed(2)}`);
-    console.log(`TO OWNER (SMS ${OWNER_PHONE}): New order! ID: ${newOrder.id}, Total: ₹${newOrder.totalAmount.toFixed(2)}`);
-    console.log(`TO BUYER (${currentUser.email}): Your SecureView order ${newOrder.id} has been confirmed! Total: ₹${newOrder.totalAmount.toFixed(2)}`);
-
+    console.log(`TO OWNER (${OWNER_EMAIL}): New order ${newOrder.id} awaiting payment confirmation. Receipt: ${newOrder.paymentReceiptFilename}. Total: ₹${newOrder.totalAmount.toFixed(2)}`);
+    console.log(`TO OWNER (SMS ${OWNER_PHONE}): New order ${newOrder.id} awaiting payment confirmation. Receipt: ${newOrder.paymentReceiptFilename}. Total: ₹${newOrder.totalAmount.toFixed(2)}`);
+    console.log(`TO BUYER (${currentUser.email}): Your ${APP_NAME} order ${newOrder.id} is awaiting payment confirmation. Total: ₹${newOrder.totalAmount.toFixed(2)}`);
 
     toast({
-      title: "Order Placed Successfully!",
-      description: `Thank you for your purchase. Your order ID is ${newOrder.id}.`,
+      title: "Order Received!",
+      description: `Your order ID is ${newOrder.id}. It's awaiting payment confirmation. We'll notify you once verified.`,
+      duration: 7000,
       action: (
         <div className="flex flex-col gap-1">
             <p className="text-xs text-muted-foreground">Order ID: {newOrder.id}</p>
@@ -190,14 +278,30 @@ export default function CheckoutPage() {
       <h1 className="text-4xl font-bold tracking-tight text-primary">Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-        {/* Shipping Details and Payment OR Login Prompt */}
         <div className="lg:col-span-2 space-y-8">
-          {isAuthenticated ? (
+          {isAuthenticated && currentUser ? (
             <>
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-2xl">Shipping Details</CardTitle>
-                  <CardDescription>Enter your shipping address to continue.</CardDescription>
+                   {currentUser.addresses && currentUser.addresses.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      <Label>Select Shipping Address</Label>
+                      <select
+                        value={selectedAddressId}
+                        onChange={(e) => handleAddressSelectionChange(e.target.value)}
+                        className="w-full p-2 border rounded-md bg-background text-sm"
+                      >
+                        {currentUser.addresses.map(addr => (
+                          <option key={addr.id} value={addr.id}>
+                            {addr.name} - {addr.street}, {addr.city}
+                          </option>
+                        ))}
+                        <option value="new">--- Enter New Address ---</option>
+                      </select>
+                    </div>
+                  )}
+                  {selectedAddressId === 'new' && <CardDescription className="pt-2">Enter your shipping address to continue.</CardDescription>}
                 </CardHeader>
                 <CardContent>
                   <Form {...form}>
@@ -207,7 +311,7 @@ export default function CheckoutPage() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Full Name</FormLabel>
+                            <FormLabel>Full Name (Recipient)</FormLabel>
                             <FormControl>
                               <Input placeholder="John Doe" {...field} />
                             </FormControl>
@@ -269,7 +373,6 @@ export default function CheckoutPage() {
                           )}
                         />
                       </div>
-                      {/* Form submission is handled by the button in the Order Summary */}
                     </form>
                   </Form>
                 </CardContent>
@@ -280,12 +383,50 @@ export default function CheckoutPage() {
                   <CardTitle className="text-2xl flex items-center gap-2">
                     <CreditCard className="h-6 w-6 text-primary" /> Payment Information
                   </CardTitle>
-                  <CardDescription>{APP_NAME} uses a secure payment gateway.</CardDescription>
+                  <CardDescription>Complete payment using one of the methods below and upload your receipt.</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="p-6 bg-muted rounded-md text-center text-muted-foreground">
-                    <p>Payment processing is currently simulated for this prototype.</p>
-                    <p>In a real application, secure payment fields would appear here.</p>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3 p-4 border rounded-md bg-muted/30">
+                      <h4 className="font-semibold text-lg flex items-center gap-2"><Banknote className="h-5 w-5 text-primary"/>Bank Transfer</h4>
+                      <p className="text-sm"><span className="font-medium">Account Name:</span> {BANK_ACCOUNT_NAME}</p>
+                      <p className="text-sm"><span className="font-medium">Account Number:</span> {BANK_ACCOUNT_NUMBER}</p>
+                      <p className="text-sm"><span className="font-medium">IFSC Code:</span> {BANK_IFSC_CODE}</p>
+                      <p className="text-sm"><span className="font-medium">Bank Name:</span> Your Bank Name</p>
+                    </div>
+                    <div className="space-y-3 p-4 border rounded-md bg-muted/30 flex flex-col items-center">
+                      <h4 className="font-semibold text-lg">UPI / QR Code</h4>
+                       <Image
+                          src="https://placehold.co/200x200.png?text=Scan+UPI+QR"
+                          alt="UPI QR Code"
+                          width={150}
+                          height={150}
+                          className="rounded-md border"
+                          data-ai-hint="qr code"
+                        />
+                      <p className="text-sm text-center"><span className="font-medium">UPI ID:</span> {UPI_ID_FOR_QR_TEXT}</p>
+                    </div>
+                  </div>
+                  
+                  <Separator />
+
+                  <div>
+                    <Label htmlFor="paymentReceipt" className="text-base font-medium flex items-center gap-2 mb-2">
+                      <UploadCloud className="h-5 w-5 text-primary" /> Upload Payment Receipt
+                    </Label>
+                    <Input
+                      id="paymentReceipt"
+                      type="file"
+                      accept="image/*,.pdf"
+                      onChange={handleReceiptUpload}
+                      className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                    />
+                    {paymentReceiptFile && (
+                      <p className="mt-2 text-sm text-muted-foreground flex items-center gap-1.5">
+                        <FileText className="h-4 w-4 text-green-600" /> Selected: {paymentReceiptFile.name}
+                      </p>
+                    )}
+                    <p className="text-xs text-muted-foreground mt-1">Max file size: 5MB. Allowed types: JPG, PNG, PDF.</p>
                   </div>
                 </CardContent>
               </Card>
@@ -321,7 +462,6 @@ export default function CheckoutPage() {
           )}
         </div>
 
-        {/* Order Summary */}
         <div className="lg:col-span-1">
           <Card className="shadow-lg sticky top-24">
             <CardHeader>
@@ -357,7 +497,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Shipping</span>
-                <span>Free</span> {/* Or calculate shipping */}
+                <span>Free</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold text-lg">
@@ -367,17 +507,22 @@ export default function CheckoutPage() {
             </CardContent>
             <CardFooter>
               <Button
-                type="button"
-                onClick={form.handleSubmit(onSubmit)}
+                type="button" 
+                onClick={form.handleSubmit(onSubmit)} 
                 className="w-full text-lg py-6 bg-accent hover:bg-accent/90 text-accent-foreground"
-                disabled={isProcessingOrder || (isAuthenticated && !form.formState.isValid) || !isAuthenticated}
+                disabled={
+                  isProcessingOrder || 
+                  !isAuthenticated || 
+                  !form.formState.isValid || 
+                  !paymentReceiptFile 
+                }
               >
                 {isProcessingOrder ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...
                   </>
                 ) : (
-                  "Place Order"
+                  "Place Order & Confirm Payment"
                 )}
               </Button>
             </CardFooter>
@@ -387,6 +532,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-
-    

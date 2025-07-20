@@ -6,7 +6,7 @@ import { getProducts } from "@/lib/products";
 import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ROUTES } from "@/lib/constants";
+import { ROUTES, APP_NAME } from "@/lib/constants";
 import React, { useState, useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -53,7 +53,7 @@ export default function HomePage() {
     <div className="space-y-8">
       <section className="text-center py-10 bg-card rounded-lg shadow">
         <h1 className="text-4xl font-bold tracking-tight text-primary mb-4">
-          Welcome to SecureView
+          Welcome to {APP_NAME}
         </h1>
         <p className="text-xl text-muted-foreground mb-6">
           Your Trusted Partner for Advanced CCTV Security Solutions.

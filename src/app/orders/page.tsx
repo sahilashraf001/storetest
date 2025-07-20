@@ -12,6 +12,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Package, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
 
+const GLOBAL_ORDERS_STORAGE_KEY = 'GLOBAL_ALL_ORDERS';
+
 export default function OrdersPage() {
   const { currentUser, loading: authLoading, isAuthenticated } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -23,7 +25,7 @@ export default function OrdersPage() {
   }, []);
 
   useEffect(() => {
-    if (authLoading) return; // Wait for auth status
+    if (authLoading) return; 
 
     if (!isAuthenticated) {
       router.replace(ROUTES.LOGIN + `?redirect=${ROUTES.ORDERS}`);
@@ -33,12 +35,11 @@ export default function OrdersPage() {
     if (currentUser) {
       setIsLoadingOrders(true);
       try {
-        const ordersStorageKey = `orders_${currentUser.id}`;
-        const storedOrdersString = localStorage.getItem(ordersStorageKey);
+        const storedOrdersString = localStorage.getItem(GLOBAL_ORDERS_STORAGE_KEY);
         if (storedOrdersString) {
-          const parsedOrders: Order[] = JSON.parse(storedOrdersString);
-          // Ensure createdAt is a Date object
-          setOrders(parsedOrders.map(order => ({...order, createdAt: new Date(order.createdAt)})));
+          const allOrders: Order[] = JSON.parse(storedOrdersString);
+          const userOrders = allOrders.filter(order => order.userId === currentUser.id);
+          setOrders(userOrders.map(order => ({...order, createdAt: new Date(order.createdAt)})));
         } else {
           setOrders([]);
         }
@@ -61,7 +62,6 @@ export default function OrdersPage() {
   }
 
   if (!isAuthenticated && !authLoading) {
-     // This case should be handled by the redirect, but as a fallback:
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] text-center">
         <ShoppingBag className="w-20 h-20 text-muted-foreground mb-6" />
@@ -119,6 +119,8 @@ export default function OrdersPage() {
                   <TableCell className="text-right">₹{order.totalAmount.toFixed(2)}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        order.status === 'Awaiting Payment Confirmation' ? 'bg-amber-100 text-amber-700' :
+                        order.status === 'Confirmed' ? 'bg-sky-100 text-sky-700' :
                         order.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
                         order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' :
                         order.status === 'Delivered' ? 'bg-green-100 text-green-700' :

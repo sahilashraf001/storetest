@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Shield, ShoppingCart, Heart, User, LogIn, LogOut, Menu } from "lucide-react";
+import { Camera, ShoppingCart, Heart, User, LogIn, LogOut, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { APP_NAME, ROUTES } from "@/lib/constants";
 import { useCart } from "@/hooks/useCart";
@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import React, { useEffect, useState } from "react";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -60,7 +60,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href={ROUTES.HOME} className="flex items-center gap-2">
-          <Shield className="h-7 w-7 text-primary" />
+          <Camera className="h-7 w-7 text-primary" />
           <span className="text-xl font-bold text-primary">{APP_NAME}</span>
         </Link>
 
@@ -97,6 +97,7 @@ export function Header() {
                   <DropdownMenuItem asChild>
                     <Link href={ROUTES.ORDERS}>My Orders</Link>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
@@ -123,12 +124,16 @@ export function Header() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full max-w-xs">
-                <div className="p-6">
-                  <Link href={ROUTES.HOME} className="flex items-center gap-2 mb-6" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Shield className="h-7 w-7 text-primary" />
-                    <span className="text-xl font-bold text-primary">{APP_NAME}</span>
-                  </Link>
+              <SheetContent side="right" className="w-full max-w-xs p-0">
+                <SheetHeader className="p-6 pb-0">
+                    <SheetTitle>
+                        <Link href={ROUTES.HOME} className="flex items-center gap-2 mb-6" onClick={() => setIsMobileMenuOpen(false)}>
+                            <Camera className="h-7 w-7 text-primary" />
+                            <span className="text-xl font-bold text-primary">{APP_NAME}</span>
+                        </Link>
+                    </SheetTitle>
+                </SheetHeader>
+                <div className="p-6 pt-0">
                   <nav className="flex flex-col space-y-4">
                     {renderNavLinks(true)}
                   </nav>
