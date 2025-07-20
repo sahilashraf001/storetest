@@ -1,7 +1,6 @@
-
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -53,36 +52,35 @@ export default function AdminLoginPage() {
     },
   });
 
- useEffect(() => {
+  useEffect(() => {
     // If user is already logged in AND is an admin, redirect to admin orders
     if (!authLoading && currentUser?.isAdmin) {
       router.replace(ROUTES.ADMIN_ORDERS);
     }
   }, [currentUser, authLoading, router]);
 
-
   const onSubmit = async (data: LoginFormValues) => {
     setIsSubmitting(true);
     // For admin login, we don't use phone, so pass empty string (or undefined if login signature changes)
-    const loggedInUser = await login(data.email, data.password, ""); 
-    
+    const loggedInUser = await login(data.email, data.password, "");
+
     if (loggedInUser && loggedInUser.isAdmin) {
       toast({
         title: "Admin Login Successful",
         description: "Redirecting to admin panel...",
       });
-      const redirectUrl = searchParams.get('redirect') || ROUTES.ADMIN_ORDERS;
+      const redirectUrl = searchParams.get("redirect") || ROUTES.ADMIN_ORDERS;
       router.push(redirectUrl);
-
     } else if (loggedInUser && !loggedInUser.isAdmin) {
-        toast({
-            title: "Access Denied",
-            description: "This account does not have admin privileges.",
-            variant: "destructive",
-          });
-          // Optionally log them out if they shouldn't stay logged in without admin access from this page
-          // logout(); 
-    } else { // This means loggedInUser is null (login failed)
+      toast({
+        title: "Access Denied",
+        description: "This account does not have admin privileges.",
+        variant: "destructive",
+      });
+      // Optionally log them out if they shouldn't stay logged in without admin access from this page
+      // logout();
+    } else {
+      // This means loggedInUser is null (login failed)
       toast({
         title: "Admin Login Failed",
         description: "Invalid email or password. Please try again.",
@@ -91,7 +89,7 @@ export default function AdminLoginPage() {
     }
     setIsSubmitting(false);
   };
-  
+
   // If loading, or if user is logged in as admin (and redirect hasn't happened yet)
   if (authLoading || (!authLoading && currentUser?.isAdmin)) {
     return (
@@ -103,66 +101,82 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="text-center">
-          <div className="flex justify-center items-center mb-4">
-            <ShieldCheck className="h-10 w-10 text-primary" />
-          </div>
-          <CardTitle className="text-3xl font-bold text-primary">Administrator Login</CardTitle>
-          <CardDescription>Access the {APP_NAME} Admin Panel.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email Address</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="admin@example.com"
-                        {...field}
-                        className="text-base"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="••••••••"
-                        {...field}
-                        className="text-base"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full text-lg py-6" disabled={isSubmitting || authLoading}>
-                {isSubmitting ? "Logging In..." : "Login as Admin"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-         <CardFooter className="text-center text-sm">
-            <Link href={ROUTES.HOME} className="text-muted-foreground hover:text-primary">
-                &larr; Back to Main Site
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-muted">Loading...</div>}>
+      <div className="flex items-center justify-center min-h-screen bg-muted">
+        <Card className="w-full max-w-md shadow-xl">
+          <CardHeader className="text-center">
+            <div className="flex justify-center items-center mb-4">
+              <ShieldCheck className="h-10 w-10 text-primary" />
+            </div>
+            <CardTitle className="text-3xl font-bold text-primary">
+              Administrator Login
+            </CardTitle>
+            <CardDescription>
+              Access the {APP_NAME} Admin Panel.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email Address</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="admin@example.com"
+                          {...field}
+                          className="text-base"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="••••••••"
+                          {...field}
+                          className="text-base"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full text-lg py-6"
+                  disabled={isSubmitting || authLoading}
+                >
+                  {isSubmitting ? "Logging In..." : "Login as Admin"}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="text-center text-sm">
+            <Link
+              href={ROUTES.HOME}
+              className="text-muted-foreground hover:text-primary"
+            >
+              &larr; Back to Main Site
             </Link>
-        </CardFooter>
-      </Card>
-    </div>
+          </CardFooter>
+        </Card>
+      </div>
+    </Suspense>
   );
 }
