@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Solutions - IT & Security Solutions</title>
+    <script>
+        // This ensures that when the page is refreshed, we go to the top.
+        window.addEventListener("beforeunload", function() {
+          window.scrollTo(0, 0); // Scrolls to the top before the page unloads
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+          window.scrollTo(0, 0); // Scrolls to the top when the page finishes loading
+        });
+
+        // Add an event listener to the Home link to refresh and scroll to top
+        function reloadAndScroll() {
+          window.location.reload();  // Forces the page to reload
+          window.scrollTo(0, 0); // Ensures the page is at the top when it reloads
+        }
+    </script>
+    
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            background-color: #f4f4f4;
+        }
+
+        /* Header with Gradient Background */
+        header {
+            background: linear-gradient(135deg, #000000, #808080); /* Gradient Background */
+            color: #fff;
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Depth shadow */
+            animation: headerAnim 1.5s ease-out; /* Animation for header */
+        }
+
+        /* Logo Section */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 70px;
+            height: auto;
+            margin-right: 15px;
+            transform-origin: center;
+            transition: all 0.5s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(15deg) scale(1.1); /* Rotate and scale the logo on hover */
+        }
+
+        .logo div {
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            color: #fff;
+            position: relative;
+            animation: logoTextAnim 1.5s ease-in-out forwards;
+        }
+
+        
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            gap: 30px;
+            position: relative;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #ff9f00; /* Accent color */
+            transition: width 0.3s ease;
+            bottom: -5px;
+            left: 0;
+        }
+
+        nav a:hover {
+            color: #ff9f00;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: rotate(90deg); /* Animation for hamburger on hover */
+        }
+
+        /* Navigation Popup (Mobile Menu) */
+        .nav-popup {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.3s ease-in-out;
+        }
+
+        .nav-popup a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-popup a:hover {
+            color: #ff9f00;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            nav {
+                display: none; /* Hide nav links on small screens */
+            }
+
+            .menu-btn {
+                display: block; /* Show hamburger menu button */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 20px;
+            }
+        }
+
+        /* Header Animation */
+        @keyframes headerAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+           <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         </style>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="https://github.com/user-attachments/assets/909c75cd-2514-403a-8870-fb8a21468f3d" alt="Prince Solutions Logo">
+            <div>Prince Solutions</div>
+        </div>
+
+        <!-- Navigation Bar (Desktop) -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="services-section.html">Services</a>
+            <a href="solutions-section.html">Solutions</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="contactus.html">Contact Us</a>
+        </nav>
+    </header>
+    <!-- Add more content here -->
+</body>
+</html>
+
+
+        <!-- Hamburger Menu Button -->
+        <button class="menu-btn" id="menu-btn">&#9776;</button>
+    </header>
+
+    <!-- Mobile Navigation Popup -->
+    <div class="nav-popup" id="nav-popup">
+        <a href="index.html">Home</a>
+       <a href="services-section.html">Services</a>
+        <a href="solutions-section.html">Solutions</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+    </div>
+
+    <script>
+        // Get elements
+        const menuBtn = document.getElementById('menu-btn');
+        const navPopup = document.getElementById('nav-popup');
+
+        // Toggle nav popup
+        menuBtn.addEventListener('click', () => {
+            if (navPopup.style.right === '0px') {
+                navPopup.style.right = '-100%'; // Hide the popup
+            } else {
+                navPopup.style.right = '0'; // Show the popup
+            }
+        });
+
+        // Close the popup if clicked outside
+        window.addEventListener('click', (event) => {
+            if (!navPopup.contains(event.target) && !menuBtn.contains(event.target)) {
+                navPopup.style.right = '-100%'; // Hide the popup if clicked outside
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- Styling for About Us Section -->
+<style>
+    /* About Us Section Styling */
+    .about {
+        background: #f4f4f4; /* Light grey background */
+        padding: 80px 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    /* About Container for Image and Text */
+    .about-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        padding: 0 20px;
+    }
+
+    /* About Image Styling */
+    .about-image {
+        flex: 1;
+        max-width: 500px;
+        margin-right: 30px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* Hover Effect for About Image */
+    .about-image:hover {
+        transform: scale(1.05); /* Zoom effect */
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* About Text Styling */
+    .about-text {
+        flex: 1;
+        max-width: 600px;
+        padding: 30px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        line-height: 1.6;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-text h2 {
+        font-size: 2.4rem;
+        color: #0073e6; /* Blue color */
+        margin-bottom: 20px;
+    }
+
+    .about-text p {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    /* Hover Effect for About Text */
+    .about-text:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive Design for About Us Section */
+    @media (max-width: 768px) {
+        .about-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-image {
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
+
+        .about-text {
+            max-width: 100%;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+        }
+    }
+</style>
+           <!-- About Us Section -->
+<section class="about" id="about">
+    <div class="about-container">
+        <div class="about-image">
+            <img src="https://github.com/user-attachments/assets/d0be576f-5e5b-48df-8f3c-64813b4bd073"/>
+        </div>
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>At Prince Solutions, we are dedicated to providing cutting-edge CCTV camera solutions to ensure the safety and security of your home, business, and property. With years of expertise in the security industry, we specialize in offering high-quality surveillance systems tailored to meet the unique needs of our clients. Whether it's for residential, commercial, or industrial purposes, we provide reliable and easy-to-use camera systems designed to monitor, protect, and give you peace of mind. Our products include state-of-the-art cameras, real-time monitoring, and customized security solutions, all backed by exceptional customer service. At Prince Solutions, your safety is our priority, and we work tirelessly to deliver the best in security technology.</p>
+        </div>
+    </div>
+</section>
+
+
+ <!-- Footer -->
+    <footer>
+        <p>© 2024 Prince Solutions. All rights reserved.</p>
+        <p><a href="#home">Back to top</a></p>
+    </footer>

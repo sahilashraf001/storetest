@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Surveillance Services</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f1f6;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(135deg, #333, #5e5e5e);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: #45a049;
+            color: white;
+            padding: 30px 10px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: #ffffff;
+            color: #45a049;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        /* Pop-up CTA Section */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background-color: #fff;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .popup h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .popup p {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .popup .popup-button {
+            background-color: #45a049;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .popup .popup-button:hover {
+            background-color: #333;
+        }
+
+        .popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Main Section */
+        .main-section {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 10px;
+        }
+
+        .main-section .content {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-section .content h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .main-section .content p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .main-section .image {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-section .image img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: #333;
+            padding: 30px 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .services .service-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Video Section */
+        .video-section, .demo-section {
+            margin: 20px 10px;
+            text-align: center;
+        }
+
+        .video-section h2, .demo-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .video-container, .demo-container {
+            width: 100%;
+            height: 300px;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        /* Interactive Map Section */
+        .map-section {
+            text-align: center;
+            margin: 20px 10px;
+        }
+
+        .map-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            margin-top: 15px;
+            border: 2px solid #ddd;
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            .main-section {
+                flex-direction: row;
+                justify-content: space-between;
+                margin: 50px 10%;
+            }
+
+            .main-section .content {
+                padding: 40px;
+            }
+
+            .services .service-cards {
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 30px;
+            }
+
+            .service-card {
+                width: 300px;
+            }
+
+            .video-container, .demo-container {
+                height: 500px;
+            }
+
+            .map-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Expert CCTV Surveillance Services</h1>
+        <p>Ensure the safety of your property with our professional CCTV installations and monitoring services.</p>
+    </header>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <h2>Contact Us for Free Consultation</h2>
+        <p>Get a customized CCTV solution for your property today!</p>
+        <a href="#" id="cta-btn" class="cta-button">Get Started</a>
+    </section>
+
+    <!-- Pop-up Call to Action Section -->
+    <div class="popup-container" id="popup-container">
+        <div class="popup">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <h2>Get Your Free Consultation</h2>
+            <p>Fill out the form and we'll contact you shortly for a customized CCTV solution.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf6-kyrVtm22FoWTZprz7Nm1xsZL7dcURuIrTvXirql_xVcbA/viewform?usp=sharing" class="popup-button">Fill form</a>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <section class="main-section">
+        <div class="content">
+            <h2>Protect Your Home and Business</h2>
+            <p>We provide state-of-the-art CCTV surveillance systems tailored to meet the needs of both residential and commercial properties. Our high-definition cameras, smart integration, and round-the-clock monitoring services give you peace of mind and security.</p>
+            <p>Our CCTV systems offer real-time monitoring, remote access, motion detection, and instant alerts. Whether it's for your home, office, or warehouse, we have the perfect surveillance solution for you.</p>
+        </div>
+        <div class="image">
+            <img src="https://via.placeholder.com/600x400" alt="CCTV Surveillance">
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <h2>Watch Our CCTV Demo</h2>
+        <div class="video-container">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DurzGrdwmBc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="map-section">
+        <h2>Our Service Areas</h2>
+        <div class="map-container">
+            <!-- Google Map Embedded -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244695.21209309853!2d77.08691446594426!3d28.593381330553633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce19466e19ae1%3A0x45ceeb565fd5de6c!2sNational%20Capital%20Region!5e0!3m2!1sen!2sin!4v1736014358513!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Our CCTV Services</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="icon">🎥</div>
+                <h3>CCTV Installation</h3>
+                <p>Professional installation of high-quality cameras tailored to your security needs.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">📱</div>
+                <h3>Remote Monitoring</h3>
+                <p>Monitor your property remotely from anywhere using mobile apps and desktops.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔒</div>
+                <h3>Security Integration</h3>
+                <p>Integrate CCTV with alarm systems, smart locks, and access control for enhanced security.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-Time Demo Section -->
+    <section class="demo-section">
+        <h2>See Live Monitoring</h2>
+        <div class="demo-container"></div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 CCTV Solutions | All Rights Reserved</p>
+    </footer>
+
+    <!-- JavaScript to handle Pop-up -->
+    <script>
+        // Show the pop-up when the button is clicked
+        const popupContainer = document.getElementById('popup-container');
+        const ctaButton = document.getElementById('cta-btn');
+        const closeBtn = document.getElementById('close-btn');
+
+        ctaButton.addEventListener('click', () => {
+            popupContainer.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            popupContainer.style.display = 'none';
+        });
+
+        // Close the pop-up if the user clicks outside the pop-up box
+        window.onclick = function(event) {
+            if (event.target == popupContainer) {
+                popupContainer.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

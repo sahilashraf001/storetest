@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prince Solutions - IT & Security Solutions</title>
+
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      background-color: #f4f4f4;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Header with Gradient Background */
+    header {
+      background: linear-gradient(135deg, #000000, #808080);
+      color: #fff;
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      animation: headerAnim 1.5s ease-out;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .logo img {
+      width: 70px;
+      height: auto;
+      margin-right: 15px;
+      transition: all 0.5s ease;
+    }
+
+    .logo:hover img {
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    .logo div {
+      font-size: 1.8rem;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+      animation: logoTextAnim 1.5s ease-in-out forwards;
+    }
+
+    @keyframes logoTextAnim {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background-color: #ff9f00;
+      bottom: -5px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ff9f00;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Hamburger Menu */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    .nav-popup {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 250px;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: right 0.3s ease-in-out;
+      z-index: 200;
+    }
+
+    .nav-popup a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem;
+      margin: 20px 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav-popup a:hover {
+      color: #ff9f00;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 15px 20px;
+      }
+    }
+
+    @keyframes headerAnim {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <script>
+    // Scroll to top on page load and reload
+    window.addEventListener("beforeunload", function () {
+      window.scrollTo(0, 0);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      window.scrollTo(0, 0);
+    });
+
+    function reloadAndScroll() {
+      window.location.reload();
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener('click', function (event) {
+      const navPopup = document.getElementById('nav-popup');
+      const menuBtn = document.getElementById('menu-btn');
+      if (!navPopup.contains(event.target) && !menuBtn.contains(event.target)) {
+        navPopup.style.right = '-100%';
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://github.com/user-attachments/assets/909c75cd-2514-403a-8870-fb8a21468f3d" alt="Prince Solutions Logo" />
+      <div>Prince Solutions</div>
+    </div>
+
+    <nav>
+      <a href="javascript:void(0);" onclick="reloadAndScroll()">Home</a>
+      <a href="services-section.html">Services</a>
+      <a href="solutions-section.html">Solutions</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+
+    <button class="menu-btn" id="menu-btn">&#9776;</button>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <div class="nav-popup" id="nav-popup">
+    <a href="javascript:void(0);" onclick="reloadAndScroll()">Home</a>
+    <a href="services-section.html">Services</a>
+    <a href="solutions-section.html">Solutions</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact Us</a>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const navPopup = document.getElementById('nav-popup');
+
+    menuBtn.addEventListener('click', () => {
+      navPopup.style.right = navPopup.style.right === '0px' ? '-100%' : '0';
+    });
+  </script>
+
+ 
+</body>
+</html>
+
+
+ <style>
+ :root {
+ --background-hsl: 0 0% 95.7%; /* #f4f4f4 */
+ --foreground-hsl: 0 0% 20%; /* #333333 */
+ --card-bg-hsl: 0 0% 100%; /* #ffffff */
+ --card-fg-hsl: 0 0% 13.7%; /* #232323 */
+ --primary-hsl: 36 100% 50%; /* #ff9f00 Orange */
+ --primary-fg-hsl: 0 0% 100%; /* White text on primary */
+ --secondary-hsl: 0 0% 92.9%; /* Lighter grey #ededed */
+ --secondary-fg-hsl: 0 0% 9%; /* Darker grey text #171717 */
+ --muted-hsl: 0 0% 90.1%; /* #e6e6e6 */
+ --muted-fg-hsl: 0 0% 45.1%; /* #737373 */
+ --accent-hsl: 36 100% 50%; /* Orange #ff9f00 */
+ --accent-fg-hsl: 0 0% 100%; /* White text on accent */
+ --destructive-hsl: 0 84.2% 60.2%;
+ --destructive-fg-hsl: 0 0% 98%;
+ --border-hsl: 0 0% 89.8%; /* #e5e5e5 */
+ --input-bg-hsl: 0 0% 92.9%; /* #ededed */
+ --ring-hsl: 36 100% 50%; /* Orange for focus rings */
+
+ --radius: 0.5rem;
+
+ --background: hsl(var(--background-hsl));
+ --foreground: hsl(var(--foreground-hsl));
+ --card-background: hsl(var(--card-bg-hsl));
+ --card-foreground: hsl(var(--card-fg-hsl));
+ --primary: hsl(var(--primary-hsl));
+ --primary-foreground: hsl(var(--primary-fg-hsl));
+ --secondary: hsl(var(--secondary-hsl));
+ --secondary-foreground: hsl(var(--secondary-fg-hsl));
+ --muted: hsl(var(--muted-hsl));
+ --muted-foreground: hsl(var(--muted-fg-hsl));
+ --accent: hsl(var(--accent-hsl));
+ --accent-foreground: hsl(var(--accent-fg-hsl));
+ --destructive: hsl(var(--destructive-hsl));
+ --destructive-foreground: hsl(var(--destructive-fg-hsl));
+ --border: hsl(var(--border-hsl));
+ --input-background: hsl(var(--input-bg-hsl));
+ --ring-color: hsl(var(--ring-hsl));
+
+ --header-bg-start: #000000;
+ --header-bg-mid: #2d3748; /* approx gray-800 */
+ --header-bg-end: #4a5568; /* approx gray-600 */
+
+ --font-sans: 'Helvetica Neue', Arial, sans-serif;
+ }
+
+ * {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ border-color: var(--border);
+ }
+
+ html {
+ scroll-behavior: smooth;
+ }
+
+ body {
+ font-family: var(--font-sans);
+ line-height: 1.6;
+ background-color: var(--background);
+ color: var(--foreground);
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+ }
+
+ .container {
+ width: 90%;
+ max-width: 1200px;
+ margin-left: auto;
+ margin-right: auto;
+ padding: 20px 15px;
+ }
+
+ .card {
+ background-color: var(--card-background);
+ color: var(--card-foreground);
+ border-radius: var(--radius);
+ border: 1px solid var(--border);
+ box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+ overflow: hidden;
+ }
+ .card-content {
+ padding: 1.5rem;
+ }
+ .card-content p {
+ margin-bottom: 1rem;
+ }
+ .card-content p:last-child {
+ margin-bottom: 0;
+ }
+
+ .services-page .section-header, .it-solutions-page .section-header, .solutions-page .section-header { text-align: center; margin-bottom: 3rem; }
+ .services-page .section-header h1, .it-solutions-page .section-header h1, .solutions-page .section-header h1 { font-size: 2.5rem; font-weight: bold; color: var(--card-foreground); margin-bottom: 1rem; }
+ .services-page .section-header p, .it-solutions-page .section-header p, .solutions-page .section-header p { font-size: 1.125rem; color: var(--muted-foreground); max-width: 40rem; margin: 0 auto; }
+
+ .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem; }
+ .service-card { text-align: center; transition: box-shadow 0.3s, transform 0.3s; }
+ .service-card-link { text-decoration: none; color: inherit; display: block; height: 100%; }
+ .service-card:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.1); transform: translateY(-5px); }
+ .service-icon { font-size: 2.5rem; /* w-12 h-12 */ color: var(--primary); margin-bottom: 1rem; }
+ .service-card h2 { font-size: 1.5rem; font-weight: 600; color: var(--card-foreground); margin-bottom: 0.5rem; }
+ .service-card p { color: var(--muted-foreground); }
+
+ .hidden { display: none !important; }
+ </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <main class="container services-page">
+        <div class="section-header">
+            <h1>Our Services</h1>
+            <p>Providing innovative and reliable IT and security solutions to empower your business.</p>
+        </div>
+        <div class="services-grid">
+            <a href="E:\GitHub\princesolutions.github\contact.html" class="card service-card-link">
+                <div class="service-card">
+                    <div class="service-icon"><span>💻</span></div>
+                    <h2>IT Solutions</h2>
+                    <p>Comprehensive IT services including network setup, server management, and software solutions tailored to your business needs.</p>
+                </div>
+            </a>
+      
+               <a href="E:\GitHub\princesolutions.github\contact.html" class="card service-card-link">
+            <div class="card service-card">
+                <div class="service-icon"><span>🛡️</span></div>
+                <h2>CCTV & Security</h2>
+                <p>State-of-the-art CCTV installation, surveillance systems, and security consulting to protect your assets and ensure peace of mind.</p>
+            </div>
+               </a>
+                    <a href="E:\GitHub\princesolutions.github\contact.html" class="card service-card-link">
+            <div class="card service-card">
+                <div class="service-icon"><span>🌐</span></div>
+                <h2>Network Infrastructure</h2>
+                <p>Design, implementation, and maintenance of robust network infrastructures for seamless connectivity and optimal performance.</p>
+            </div>
+           </a>
+            <div class="card service-card">
+                <div class="service-icon"><span>⚙️</span></div>
+                <h2>Custom Solutions</h2>
+                <p>Bespoke technology solutions developed to address unique challenges and achieve specific business objectives.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <div id="toaster-container"></div>
+
+    <script src="js/product-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+ <!-- Footer -->
+    <footer>
+        <p>© 2024 Prince Solutions. All rights reserved.</p>
+        <p><a href="#home">Back to top</a></p>
+    </footer>
+
+

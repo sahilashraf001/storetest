@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Solutions - IT & Security Solutions</title>
+    <script>
+        // This ensures that when the page is refreshed, we go to the top.
+        window.addEventListener("beforeunload", function() {
+          window.scrollTo(0, 0); // Scrolls to the top before the page unloads
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+          window.scrollTo(0, 0); // Scrolls to the top when the page finishes loading
+        });
+
+        // Add an event listener to the Home link to refresh and scroll to top
+        function reloadAndScroll() {
+          window.location.reload();  // Forces the page to reload
+          window.scrollTo(0, 0); // Ensures the page is at the top when it reloads
+        }
+    </script>
+    
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            background-color: #f4f4f4;
+        }
+
+        /* Header with Gradient Background */
+        header {
+            background: linear-gradient(135deg, #000000, #808080); /* Gradient Background */
+            color: #fff;
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Depth shadow */
+            animation: headerAnim 1.5s ease-out; /* Animation for header */
+        }
+
+        /* Logo Section */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 70px;
+            height: auto;
+            margin-right: 15px;
+            transform-origin: center;
+            transition: all 0.5s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(15deg) scale(1.1); /* Rotate and scale the logo on hover */
+        }
+
+        .logo div {
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            color: #fff;
+            position: relative;
+            animation: logoTextAnim 1.5s ease-in-out forwards;
+        }
+
+        
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            gap: 30px;
+            position: relative;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #ff9f00; /* Accent color */
+            transition: width 0.3s ease;
+            bottom: -5px;
+            left: 0;
+        }
+
+        nav a:hover {
+            color: #ff9f00;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: rotate(90deg); /* Animation for hamburger on hover */
+        }
+
+        /* Navigation Popup (Mobile Menu) */
+        .nav-popup {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.3s ease-in-out;
+        }
+
+        .nav-popup a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-popup a:hover {
+            color: #ff9f00;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            nav {
+                display: none; /* Hide nav links on small screens */
+            }
+
+            .menu-btn {
+                display: block; /* Show hamburger menu button */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 20px;
+            }
+        }
+
+        /* Header Animation */
+        @keyframes headerAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+           <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         </style>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="https://github.com/user-attachments/assets/909c75cd-2514-403a-8870-fb8a21468f3d" alt="Prince Solutions Logo">
+            <div>Prince Solutions</div>
+        </div>
+
+        <!-- Navigation Bar (Desktop) -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="services-section.html">Services</a>
+            <a href="solutions-section.html">Solutions</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="contactus.html">Contact Us</a>
+        </nav>
+    </header>
+    <!-- Add more content here -->
+</body>
+</html>
+
+
+        <!-- Hamburger Menu Button -->
+        <button class="menu-btn" id="menu-btn">&#9776;</button>
+    </header>
+
+    <!-- Mobile Navigation Popup -->
+    <div class="nav-popup" id="nav-popup">
+        <a href="index.html">Home</a>
+        <a href="services-section.html">Services</a>
+        <a href="solutions-section.html">Solutions</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+    </div>
+
+    <script>
+        // Get elements
+        const menuBtn = document.getElementById('menu-btn');
+        const navPopup = document.getElementById('nav-popup');
+
+        // Toggle nav popup
+        menuBtn.addEventListener('click', () => {
+            if (navPopup.style.right === '0px') {
+                navPopup.style.right = '-100%'; // Hide the popup
+            } else {
+                navPopup.style.right = '0'; // Show the popup
+            }
+        });
+
+        // Close the popup if clicked outside
+        window.addEventListener('click', (event) => {
+            if (!navPopup.contains(event.target) && !menuBtn.contains(event.target)) {
+                navPopup.style.right = '-100%'; // Hide the popup if clicked outside
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- Solutions Section -->
+<section class="solutions" id="solutions">
+    <h2>Solutions</h2>
+
+    <style>
+        /* Styles for the entire solutions section */
+        .solutions {
+            text-align: center;
+            opacity: 0; /* Hidden initially */
+            transform: translateY(50px); /* Starts below */
+            transition: opacity 1s ease-out, transform 4s ease-out; /* Smooth transition for visibility and position */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(0, 123, 255, 0.1)), url('background-image.jpg'); /* Gradient + image background */
+            background-size: cover; /* Ensure background covers the entire section */
+            background-position: center; /* Center the background image */
+            padding: 60px 0; /* Add padding for better spacing */
+            border-radius: 15px; /* Slight border-radius for a soft, modern feel */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+            animation: animateBackground 10s infinite linear; /* Apply animation for background */
+        }
+
+        /* Animation for moving background and gradient change */
+        @keyframes animateBackground {
+            0% {
+                background-position: 0 0, center center;
+            }
+            50% {
+                background-position: 100% 100%, center center;
+            }
+            100% {
+                background-position: 0 0, center center;
+            }
+        }
+
+        .solutions.visible {
+            opacity: 1;
+            transform: translateY(0); /* Brings it into the normal position */
+        }
+
+        /* Styling for each solution item */
+        .solution-item {
+            opacity: 0; /* Hide each item initially */
+            transform: translateY(30px); /* Start lower than the final position */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Transition for smooth animation */
+            margin-bottom: 40px; /* Space between items */
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Vertically center the content */
+            justify-content: center; /* Center horizontally */
+            text-align: left; /* Align text to the left */
+            gap: 30px; /* Space between the image and text */
+            flex-wrap: nowrap; /* Prevent wrapping */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background to make content readable */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+        }
+
+        /* This class will be added when the item comes into view */
+        .solution-item.visible {
+            opacity: 1;
+            transform: translateY(0); /* Return to natural position */
+        }
+
+        /* Image styling */
+        .solution-item img {
+            width: 250px; /* Larger image size */
+            height: auto;
+            border-radius: 10px; /* Rounded corners for the image */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+        }
+
+        /* Heading and paragraph styling */
+        h3 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333; /* Dark color for headings */
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555; /* Softer text color */
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .solution-item {
+                flex-direction: column; /* Stack items vertically on smaller screens */
+                align-items: flex-start; /* Align items to the left */
+                text-align: center; /* Center text on mobile */
+                gap: 20px; /* Smaller gap between image and text */
+            }
+
+            /* Adjust image size for mobile */
+            .solution-item img {
+                width: 200px; /* Smaller image on mobile */
+            }
+
+            h3 {
+                font-size: 20px; /* Slightly smaller heading font on mobile */
+            }
+
+            p {
+                font-size: 14px; /* Smaller paragraph text */
+            }
+        }
+
+        /* Further responsiveness for very small screens */
+        @media (max-width: 480px) {
+            .solution-item img {
+                width: 180px; /* Even smaller image size */
+            }
+
+            h3 {
+                font-size: 18px; /* Even smaller heading font */
+            }
+
+            p {
+                font-size: 12px; /* Smaller paragraph text */
+            }
+        }
+
+    </style>
+
+    <!-- CCTV Solution -->
+    <div class="solution-item">
+        <img src="https://github.com/user-attachments/assets/aed7cd18-9570-4f0c-9871-ec47646c69ab" alt="CCTV Camera">
+        <div>
+            <h3>Advanced CCTV Solutions for Complete Surveillance Coverage</h3>
+            <p>At Prince Solutions, we offer state-of-the-art CCTV solutions designed to enhance the security of your premises. Our high-definition cameras provide 24/7 surveillance, ensuring that you have constant visibility over key areas, both indoors and outdoors. Whether for a commercial building, residential property, or industrial site, our CCTV systems are tailored to meet your unique security needs. Equipped with remote access, motion detection, and night vision capabilities, our solutions deliver clear, real-time footage that helps deter crime and offers peace of mind. With our expert installation and ongoing support, you can trust that your property is always monitored and protected.</p>
+        </div>
+    </div>
+
+    <!-- Access Control Solution -->
+    <div class="solution-item">
+        <img src="access-control-image.jpg" alt="Access Control">
+        <div>
+            <h3>Secure Access Control Solutions for Enhanced Protection</h3>
+            <p>At Prince Solutions, we provide advanced access control solutions that give you complete control over who enters your premises. Our systems are designed to enhance security by restricting unauthorized access to sensitive areas while ensuring smooth and efficient entry for authorized personnel. Whether you need keycard access, biometric authentication, or mobile-based entry systems, we offer customizable solutions that fit the unique needs of your business. With real-time monitoring, audit trails, and remote management, our access control systems provide both security and convenience. Protect your assets, safeguard your employees, and streamline access management with our reliable, cutting-edge solutions.</p>
+        </div>
+    </div>
+
+    <!-- Fire Alarm Solution -->
+         <div class="solution-item">
+        <img src="fire-alarm-image.jpg" alt="Fire Alarm System">
+        <div>
+            <h3>Reliable Fire Alarm Solutions for Early Detection and Safety</h3>
+            <p>At Prince Solutions, we understand the critical importance of fire safety. Our fire alarm solutions are designed to provide early detection and rapid response to potential fire hazards. With advanced smoke detectors, heat sensors, and alarm systems, we ensure that your premises are protected against fire risks. Our solutions are tailored to meet the specific needs of your environment, whether it's a commercial building, industrial facility, or residential property. With 24/7 monitoring and integration with emergency services, our fire alarm systems offer peace of mind and help safeguard lives and property. Trust us to keep you safe with our reliable fire alarm solutions.</p>
+        </div> 
+</section>
+    <!--Security System Solution -->    
+        <div class="solution-item">
+        <img src="security-system-image.jpg" alt="Security System"> 
+            <div>
+                <h3>Comprehensive Security System Solutions for Total Protection</h3>
+                <p>At Prince Solutions, we offer comprehensive security system solutions designed to provide total protection for your premises. Our systems integrate advanced technologies such as video surveillance, access control, and alarm monitoring to create a robust security framework. Whether you need a complete security overhaul or an upgrade to your existing system, our team of experts will work with you to design a solution that meets your specific needs. With real-time monitoring, remote access, and customizable alerts, our security systems ensure that you are always in control of your safety. Trust us to safeguard your assets and provide peace of mind with our reliable security solutions.</p>       
+            </div>
+        </section>
+
+
+<script>
+    // JavaScript to add the animation when the section comes into view
+    window.addEventListener('scroll', function () {
+        const solutionsSection = document.getElementById('solutions');
+        const solutionItems = document.querySelectorAll('.solution-item');
+
+        // Check if the solutions section is in the viewport
+        const rect = solutionsSection.getBoundingClientRect();
+        if (rect.top <= window.innerHeight) {
+            solutionsSection.classList.add('visible'); // Trigger overall section visibility
+
+            // Animate each solution item one by one
+            solutionItems.forEach((item, index) => {
+                if (item.getBoundingClientRect().top <= window.innerHeight) {
+                    setTimeout(() => {
+                        item.classList.add('visible'); // Trigger individual item visibility with delay
+                    }, index * 300); // Delay each item by 300ms
+                }
+            });
+        }
+    });
+</script>
+    
+        <style>
+            /* Footer Styling */
+            footer {
+                background-color: #000; /* Dark background for footer */
+                color: #fff; /* White text color */
+                text-align: center; /* Centered text */
+                padding: 20px 0; /* Padding for spacing */
+                position: relative; /* Position relative for stacking context */
+                bottom: 0; /* Stick to the bottom of the page */
+                width: 100%; /* Full width */
+            }
+    
+            footer p {
+                margin: 5px 0; /* Margin for spacing between paragraphs */
+            }
+    
+            footer a {
+                color: #ff9f00; /* Accent color for links */
+                text-decoration: none; /* Remove underline from links */
+            }
+    
+            footer a:hover {
+                text-decoration: underline; /* Underline on hover for links */
+            }
+        </style>
+<!-- Footer -->
+    <footer>
+        <p>© 2024 Prince Solutions. All rights reserved.</p>
+        <p><a href="#home">Back to top</a></p>
+    </footer>
+

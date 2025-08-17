@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Networking Services</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(45deg, #00bcd4, #009688);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+        }
+
+        /* Main Section */
+        .main-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 5%;
+        }
+
+        .main-section .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .main-section .content h2 {
+            font-size: 1.8rem;
+            color: #009688;
+            margin-bottom: 15px;
+        }
+
+        .main-section .content p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Image Animation */
+        .main-section .image {
+            flex: 1;
+            margin-left: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: fadeInZoom 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        .main-section .image img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Services Section */
+        .services {
+            background-color: #009688;
+            padding: 30px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .services .service-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            color: #009688;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .service-card .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #009688;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .main-section {
+                flex-direction: column;
+            }
+
+            .main-section .image {
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+
+            .services h2 {
+                font-size: 1.5rem;
+            }
+
+            .service-card {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+
+            .main-section .content h2 {
+                font-size: 1.5rem;
+            }
+
+            .services h2 {
+                font-size: 1.2rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Computer Networking Services</h1>
+        <p>Connecting Your Business for Success</p>
+    </header>
+
+    <!-- Main Section -->
+    <section class="main-section">
+        <div class="content">
+            <h2>Reliable Networking Solutions</h2>
+            <p>We provide customized networking solutions to help businesses optimize their communication and enhance productivity. Whether you need a new network setup or improvements to your existing infrastructure, our expert team can assist you in achieving seamless connectivity.</p>
+            <p>From small businesses to large enterprises, we offer end-to-end solutions including network design, security, monitoring, and management to ensure your network is running at its peak performance.</p>
+        </div>
+        <div class="image">
+            <img src="https://github.com/user-attachments/assets/30e99aaa-5400-4a55-8fa6-3129981aa555" alt="Networking Image">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Our Networking Services</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="icon">🔌</div>
+                <h3>Network Setup</h3>
+                <p>We help set up your entire network infrastructure, ensuring connectivity and scalability.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔐</div>
+                <h3>Network Security</h3>
+                <p>Implementing security measures to protect your network from external threats.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">📊</div>
+                <h3>Network Monitoring</h3>
+                <p>Real-time monitoring to ensure network health, performance, and reliability.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Computer Networking Solutions | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

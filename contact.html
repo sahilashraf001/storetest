@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer and IT Solutions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e5e5;
+        }
+
+        header {
+            background-color: #2b2b2b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        nav a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #000000cc;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card h3 {
+            color: #000000;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .service-card p {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            background-color: #f9f9f9;
+        }
+
+        .contact-form button {
+            background-color: #000000;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #000000;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+           <style>
+    body {
+        -webkit-user-select: none; /* Disable text selection in Webkit browsers (Chrome, Safari, etc.) */
+        -moz-user-select: none;    /* Disable text selection in Firefox */
+        -ms-user-select: none;     /* Disable text selection in Internet Explorer */
+        user-select: none;         /* Standard syntax for modern browsers */
+    }
+</style>
+
+    <header>
+        <h1>Computer and IT Solutions</h1>
+        <p>Innovative Technology Solutions for Your Business Success</p>
+    </header>
+                
+          <section class="services" id="services">
+    <h2 class="section-title">Our Services</h2>
+
+    <div class="services-list">
+        <a href="IT Consulting.html" class="service-link">
+            <div class="service-card">
+                <div class="icon-container">
+                    <h3>IT Consulting</h3>
+                </div>
+                <p>Our IT Consultants offer expert advice to help you optimie your IT systems and achieve your business goals.</p>
+            </div>
+        </a>
+
+        <a href="networking.html" class="service-link">
+            <div class="service-card">
+                <div class="icon-container">                    
+                    <h3>Network Solutions</h3>
+                </div>
+                <p>We provide robust network infrastructure solutions, including design, setup, and maintenance to ensure smooth and secure operations.</p>
+            </div>
+        </a>
+
+        <a href="Hardwaresupport.html" class="service-link">
+            <div class="service-card">
+                <div class="icon-container">
+                    <h3>Hardware Support</h3>
+                </div>
+                <p>From repair to upgrades, we provide comprehensive support for all your computer hardware needs.</p>
+            </div>
+        </a>
+
+        <a href="cloud-solutions-link.html" class="service-link">
+            <div class="service-card">
+                <div class="icon-container">                    
+                    <h3>Cloud Solutions</h3>
+                </div>
+                <p>Cloud computing and data storage services.</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<style>     
+    .services {
+        text-align: center;
+    }
+
+    .section-title {
+        display: inline-block;
+    }
+
+    .services-list {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px; /* Spacing between the cards */
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    }
+
+    .service-link {
+        display: block;
+        text-decoration: none; 
+        width: 30%; /* Makes three cards in a row with some gap */
+        opacity: 0; /* Initially hidden */
+        transform: translateX(-100px); /* Start off-screen to the left */
+        transition: opacity 0.8s, transform 2.2s ease; /* For smooth animation */
+    }
+
+    .service-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .service-card:hover {
+        background-color: #45a049;
+    }
+
+    .service-card .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .service-card h3 {
+        font-size: 22px;
+        margin: 10px 0;
+    }
+
+    .service-card p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* Responsive design for medium screens */
+    @media (max-width: 1024px) {
+        .service-link {
+            width: 48%; /* Two cards in a row on medium screens */
+        }
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+        .service-link {
+            width: 100%; /* Stacks the cards vertically on smaller screens */
+        }
+    }
+
+    /* Animation when the card is visible */
+    .service-link.visible {
+        opacity: 1;
+        transform: translateX(0); /* Move to its original position */
+    }
+</style>
+
+<script>
+    // Create an intersection observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // If the card is in the viewport, add the 'visible' class to trigger the animation
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger when 50% of the element is visible
+    });
+
+    // Select all service link elements to observe
+    const serviceLinks = document.querySelectorAll('.service-link');
+    serviceLinks.forEach(link => observer.observe(link));
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    
+
+    
+    
+
+
+        
+    <footer>
+        <p>&copy; 2024 Computer and IT Solutions. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

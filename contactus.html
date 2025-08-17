@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Solutions - IT & Security Solutions</title>
+    <script>
+        // This ensures that when the page is refreshed, we go to the top.
+        window.addEventListener("beforeunload", function() {
+          window.scrollTo(0, 0); // Scrolls to the top before the page unloads
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+          window.scrollTo(0, 0); // Scrolls to the top when the page finishes loading
+        });
+
+        // Add an event listener to the Home link to refresh and scroll to top
+        function reloadAndScroll() {
+          window.location.reload();  // Forces the page to reload
+          window.scrollTo(0, 0); // Ensures the page is at the top when it reloads
+        }
+    </script>
+    
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            background-color: #f4f4f4;
+        }
+
+        /* Header with Gradient Background */
+        header {
+            background: linear-gradient(135deg, #000000, #808080); /* Gradient Background */
+            color: #fff;
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Depth shadow */
+            animation: headerAnim 1.5s ease-out; /* Animation for header */
+        }
+
+        /* Logo Section */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 70px;
+            height: auto;
+            margin-right: 15px;
+            transform-origin: center;
+            transition: all 0.5s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(15deg) scale(1.1); /* Rotate and scale the logo on hover */
+        }
+
+        .logo div {
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            color: #fff;
+            position: relative;
+            animation: logoTextAnim 1.5s ease-in-out forwards;
+        }
+
+
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            gap: 30px;
+            position: relative;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #ff9f00; /* Accent color */
+            transition: width 0.3s ease;
+            bottom: -5px;
+            left: 0;
+        }
+
+        nav a:hover {
+            color: #ff9f00;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: rotate(90deg); /* Animation for hamburger on hover */
+        }
+
+        /* Navigation Popup (Mobile Menu) */
+        .nav-popup {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.3s ease-in-out;
+        }
+
+        .nav-popup a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-popup a:hover {
+            color: #ff9f00;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            nav {
+                display: none; /* Hide nav links on small screens */
+            }
+
+            .menu-btn {
+                display: block; /* Show hamburger menu button */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 20px;
+            }
+        }
+
+        /* Header Animation */
+        @keyframes headerAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+           <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         </style>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="https://github.com/user-attachments/assets/909c75cd-2514-403a-8870-fb8a21468f3d" alt="Prince Solutions Logo">
+            <div>Prince Solutions</div>
+        </div>
+
+        <!-- Navigation Bar (Desktop) -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="services-section.html">Services</a>
+            <a href="solutions-section.html">Solutions</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="contactus.html">Contact Us</a>
+        </nav>
+    </header>
+    <!-- Add more content here -->
+</body>
+</html>
+
+
+        <!-- Hamburger Menu Button -->
+        <button class="menu-btn" id="menu-btn">&#9776;</button>
+    </header>
+
+    <!-- Mobile Navigation Popup -->
+    <div class="nav-popup" id="nav-popup">
+        <a href="index.html">Home</a>
+       <a href="services-section.html">Services</a>
+        <a href="solutions-section.html">Solutions</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+    </div>
+
+    <script>
+        // Get elements
+        const menuBtn = document.getElementById('menu-btn');
+        const navPopup = document.getElementById('nav-popup');
+
+        // Toggle nav popup
+        menuBtn.addEventListener('click', () => {
+            if (navPopup.style.right === '0px') {
+                navPopup.style.right = '-100%'; // Hide the popup
+            } else {
+                navPopup.style.right = '0'; // Show the popup
+            }
+        });
+
+        // Close the popup if clicked outside
+        window.addEventListener('click', (event) => {
+            if (!navPopup.contains(event.target) && !menuBtn.contains(event.target)) {
+                navPopup.style.right = '-100%'; // Hide the popup if clicked outside
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+ <!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="contact-header">
+            <h2>Get in Touch</h2>
+            <p>We would love to hear from you! Reach out to us for inquiries, support, or project discussions.</p>
+        </div>
+
+        <!-- Contact Information Section with Icons -->
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://img.icons8.com/ios/50/000000/email.png" alt="Email Icon">
+                </div>
+                <h3>Email Us</h3>
+                <p><a href="mailto:support@princesolutions.in">support@princesolutions.in</a></p>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://github.com/user-attachments/assets/b05a09e7-5921-46db-af04-ea113a234e9c" alt="Phone Icon">
+                </div>
+                <h3>Call Us</h3>
+                <p>
+                    <a href="tel:+919927122440">+91-9927122440</a><br />
+                    <a href="tel:+919917122440">+91-9917122440</a>
+                </p>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://github.com/user-attachments/assets/c459705f-8cea-4386-bbaf-d7a5aaeb4ab5" alt="Location Icon">
+                </div>
+                <h3>Visit Us</h3>
+                <p>Opp. Govt Hospital, Moh Kavi Nagar, Gajraula(Amroha) 244235</p>
+            </div>
+
+            <!-- New Instagram Follow Us Section -->
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://github.com/user-attachments/assets/52966619-aa56-4638-b844-125598835a63" alt="Instagram Icon">
+                </div>
+                <h3>Follow Us on Instagram</h3>
+                <p><a href="https://www.instagram.com/prince.solutions" target="_blank">prince.solutions</a></p>
+            </div>
+
+            <!-- New Facebook follow us section -->
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://github.com/user-attachments/assets/58373706-c01a-45f9-9422-b58916abfde1" alt="Facebook Icon">
+                </div>
+                <h3>Follow Us on Facebook</h3>
+                <p><a href="https://www.facebook.com/profile.php?id=61564082030508" target="_blank">Prince solutions</a></p>
+            </div>
+        </div>
+
+        <!-- Google Map Section -->
+        <div class="contact-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d218.44205758793515!2d78.24258437198287!3d28.83668891247085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b75712f1d15b5%3A0x61dbe2a8ac765515!2sM%2Fs%20Prince%20Solutions!5e0!3m2!1sen!2sin!4v1734622649253!5m2!1sen!2sin" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Styling for Contact Section -->
+<style>
+    /* General Contact Section Styling */
+    .contact {
+        background-color: #ffffff;
+        padding: 60px 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .contact-header h2 {
+        font-size: 2.5rem;
+        color: #2f4f91;
+        margin-bottom: 20px;
+    }
+
+    .contact-header p {
+        font-size: 1.1rem;
+        color: #666;
+    }
+
+    /* Contact Information Section */
+    .contact-info {
+        display: flex;
+        justify-content: space-between;  /* Spread the items evenly across the row */
+        gap: 10px; /* Optional, adds space between items */
+        margin-top: 40px;
+        flex-wrap: nowrap; /* Prevent wrapping */
+    }
+
+    .contact-item {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 25px;
+        width: 19%;  /* Adjust width to fit 5 items in one row */
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-item h3 {
+        font-size: 1.4rem;
+        color: #2f4f91;
+        margin-top: 20px;
+    }
+
+    .contact-item p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .contact-item a {
+        color: #2f4f91;
+        text-decoration: none;
+    }
+
+    .contact-icon img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+    }
+
+    /* Hover Effect */
+    .contact-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Map Section */
+    .contact-map iframe {
+        width: 40%;
+        height: 230px;
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .contact-info {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-item {
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .contact-header h2 {
+            font-size: 2rem;
+        }
+
+        .contact-header p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+
+<br>
+
+
+        <div class="contact-form">
+    <div class="form-container">
+        <h3 class="form-title">Contact Us</h3>
+        <form action="https://formsubmit.co/msprincesolutions@gmail.com" method="POST">
+            <!-- Name Input -->
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+
+            <!-- Message Textarea -->
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" required placeholder="Tell us how we can help"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* General Contact Form Styling */
+    .contact-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120vh;
+        background: linear-gradient(135deg, #3498db, #8e44ad);
+        padding: 30px;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    /* Input Field Styling */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+        color: #7f8c8d;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f5f5f5;
+    }
+
+    /* Focus Effect */
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.6);
+        outline: none;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    /* Submit Button Styling */
+    .submit-btn {
+        background-color: #3498db;
+        color: #ffffff;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+        background-color: #2980b9;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 20px;
+        }
+
+        .form-title {
+            font-size: 1.6rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+
+        .submit-btn {
+            font-size: 1rem;
+            padding: 10px 25px;
+        }
+    }
+
+    /* Mobile-First */
+    @media (max-width: 480px) {
+        .form-container {
+            padding: 15px;
+            max-width: 90%;
+        }
+
+        .form-title {
+            font-size: 1.4rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+
+        .submit-btn {
+            font-size: 0.9rem;
+            padding: 8px 20px;
+        }
+    }
+</style>
+
+
+        </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Prince Solutions. All rights reserved.</p>
+        <p><a href="#home">Back to top</a></p>
+    </footer>
+
+</body>
+</html>
